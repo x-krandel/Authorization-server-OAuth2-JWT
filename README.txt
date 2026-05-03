@@ -1,12 +1,7 @@
 Propozycja projektu: Ekosystem Autoryzacji "SafeStack"
 Możesz podzielić projekt na trzy główne komponenty:
 
-<<<<<<< HEAD
-Propozycja projektu: Ekosystem Autoryzacji "SafeStack"
-Możesz podzielić projekt na trzy główne komponenty:
 
-=======
->>>>>>> dd93218914094852100116c1793e365555af8137
 1. Java: Authorization Server (Serce)
 To tutaj dzieje się "ciężka" kryptografia. Java świetnie nadaje się do obsługi standardów takich jak OAuth2 czy OpenID Connect.
 
@@ -39,4 +34,3 @@ C (Pwn): Przy parsowaniu nagłówków HTTP w serwerze napisanym w C, użyj niebe
 
 Od czego zacząć?
 Najlepiej zacząć od Javy i generowania JWT. Gdy będziesz miał działający token, dopisz do niego prosty skrypt w PHP, który go wyświetli i zdekoduje. Na końcu dodaj C jako warstwę dostępu do danych.
-<<<<<<< HEAD
