@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/admin/Desktop/Authorization-server-OAuth2-JWT/**/*.jar"
+    ]
+}
