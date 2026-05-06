@@ -2,12 +2,8 @@ Propozycja projektu: Ekosystem Autoryzacji "SafeStack"
 Możesz podzielić projekt na trzy główne komponenty:
 
 
-1. Java: Authorization Server (Serce)
-To tutaj dzieje się "ciężka" kryptografia. Java świetnie nadaje się do obsługi standardów takich jak OAuth2 czy OpenID Connect.
-
-Zadanie: Generowanie tokenów JWT, obsługa kluczy prywatnych/publicznych (RSA/ECDSA) oraz weryfikacja logowania.
-
-Wyzwanie: Napisz własną implementację podpisywania JWT, zamiast używać gotowych bibliotek typu Spring Security, aby zrozumieć strukturę nagłówka, payloadu i sygnatury.
+1. Java -> Done 
+  **To run use command: `mvn clean spring-boot:run` **
 
 2. PHP: Client Application / Dashboard (Frontend & Logic)
 PHP może pełnić rolę aplikacji, która "konsumuje" tokeny z Javy. To tutaj najczęściej pojawiają się luki typu Broken Access Control.
