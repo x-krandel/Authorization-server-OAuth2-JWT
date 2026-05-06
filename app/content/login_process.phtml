@@ -1,0 +1,60 @@
+<?php
+
+
+$username = $_POST['username'] ?? "";
+$password = $_POST['password'] ?? "";
+
+
+$ch = curl_init("http://127.0.0.1:8080/api/auth/login");
+
+
+curl_setopt_array($ch, [
+    CURLOPT_POST           => true,
+    CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+    CURLOPT_POSTFIELDS     => json_encode([
+        'username' => $username,
+        'password' => $password,
+    ]),
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_HEADER         => true,   // <-- potrzebne, żeby odczytać nagłówki
+]);
+
+
+$rawResponse = curl_exec($ch);
+$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+$headers = substr($rawResponse, 0, $headerSize); // return part of string -> substr(string $string, int $offset, ?int $length = null): string
+curl_close($ch);
+
+$jwt_token = null;
+
+//separowanie stringa ->  explode(string $separator, string $string, int $limit = PHP_INT_MAX): array
+//stripos(string $haystack, string $needle, int $offset = 0): int|false -> Find the numeric position of the first occurrence of needle in the haystack string.
+
+foreach(explode("\r\n", $headers) as $line) { 
+    if (stripos($line, "Set-Cookie") === 0) { 
+
+        preg_match("/jwt_token=([^;]+)/", $line, $matches);
+        if(!empty($matches[1])) {
+            $jwt_token = $matches[1];
+        }
+    }
+}
+
+if ($jwt_token) {
+    setcookie(
+        'jwt_token',
+        $jwt_token,
+        [
+            'expires'   => time() + 3600,
+            'path'      => '/',
+            'httponly'  => true,
+            'secure'    => false,
+            'samesite'  => 'Strict',
+        ]
+    );
+    header('Location: index.php?page=home');
+    exit();
+} else {
+    header('Location: index.php?page=login&error=-1');
+    exit();
+}

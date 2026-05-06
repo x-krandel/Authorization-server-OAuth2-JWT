@@ -44,14 +44,15 @@ function page_title()
 
 function page_content()
 {
-    $page = isset($_GET['page']) ? $_GET['page'] : 'Home';
-    $path = getcwd() . '/' . config('content_path') . '/404.phtml'; 
+    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+    $page = basename($page);
+    $path = getcwd() . '/' . config('content_path') . '/' . $page . '.phtml';
 
     if (! file_exists($path)) {
         $path = getcwd() . '/' . config('content_path') . '/404.phtml';
     }
 
-    echo file_get_contents($path);
+    include $path;
 }
 
 
