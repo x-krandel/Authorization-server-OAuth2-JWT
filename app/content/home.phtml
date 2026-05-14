@@ -3,7 +3,7 @@
 
 
 <?php
-if (isset($_COOKIE["jwt_token"])){
+if (isset($_COOKIE["jwt_token"]) and $_COOKIE["jwt_token"] != ''){
     $token = $_COOKIE["jwt_token"];
     $data = explode(".", $token);
     $base64_data = $data[1];
@@ -14,8 +14,30 @@ if (isset($_COOKIE["jwt_token"])){
     $exp=$datajs->{'exp'};
     if (($exp-$iat) < 0) {
         header("Location: ".$newURL);
+        exit;
     }
     echo "❇️ Cookie has been set ❇️";
     echo "<br><p>user: " . $datajs->{'sub'} . "</p>";
+
+    // Checking signature using serwer C
+
+    $ch = curl_init("http://127.0.0.1:1337");
+
+
+    curl_setopt_array($ch, [
+        CURLOPT_HTTPGET        => true,
+        CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'Cookie: jwt_token=' . $token],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HEADER         => true,   // <-- potrzebne, żeby odczytać nagłówki
+    ]);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1); // Czekaj max 1s na połączenie
+    curl_setopt($ch, CURLOPT_TIMEOUT, 2);        // Czekaj max 2s na całą odpowiedź
+    
+    $result = curl_exec($ch);
+    if ($result === false) {
+        $er=curl_error($ch);
+        echo "Token validation ...";
+    }
+
 }
 ?>

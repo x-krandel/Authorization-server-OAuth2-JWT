@@ -22,4 +22,5 @@ public class TokenService {
                 .signWith(key)
                 .compact();
     }
+    public String jwt_secret() {return SECRET;}
 }
