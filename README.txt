@@ -15,6 +15,13 @@ Wyzwanie: Zaimplementuj mechanizm SSO (Single Sign-On). Dodaj w PHP logikę, kt�
 3. C: Resource Server / API (Low-level Data)
 To najbardziej ambitna część. Napisz mały serwer w C (np. oparty na bibliotece libmicrohttpd lub surowych socketach), który przechowuje "wrażliwe dane".
 
+Uruchamianie:
+ admin@host server % gcc index.c \
+  -I$(brew --prefix openssl)/include \
+  -L$(brew --prefix openssl)/lib \
+  -lssl -lcrypto \
+  -o jwt_validate
+
 Zadanie: PHP wysyła zapytanie do serwera w C, dołączając token JWT w nagłówku Authorization: Bearer. Serwer w C musi sparsować ten token i zweryfikować sygnaturę kluczem publicznym pobranym z Javy.
 
 Wyzwanie: Bezpieczne parsowanie JSON-a w C. To idealne miejsce na błędy typu buffer overflow, co jako gracz CTF możesz później sam spróbować zeskładować.
