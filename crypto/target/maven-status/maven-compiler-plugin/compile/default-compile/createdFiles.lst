@@ -1,0 +1,5 @@
+controller/AuthRestController.class
+com/example/security/TokenService.class
+com/example/dto/LoginRequest.class
+com/example/controller/AuthRestController.class
+com/example/CryptoApplication.class

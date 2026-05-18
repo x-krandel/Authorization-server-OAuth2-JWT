@@ -7,7 +7,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <stdbool.h>
-#include <openssl/hmac.h>
+
 
 #define JAVA_PORT 8080
 #define C_SERVER_PORT 1337
