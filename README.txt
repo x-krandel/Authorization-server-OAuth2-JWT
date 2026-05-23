@@ -10,6 +10,8 @@ PHP może pełnić rolę aplikacji, która "konsumuje" tokeny z Javy. To tutaj n
 
 Zadanie: Strona użytkownika (np. prosty panel managera plików). Aplikacja wysyła użytkownika do serwera w Javie, odbiera token JWT i przechowuje go w bezpiecznym ciasteczku (HttpOnly, Secure).
 
+# php -S localhost:8000
+
 Wyzwanie: Zaimplementuj mechanizm SSO (Single Sign-On). Dodaj w PHP logikę, która sprawdza ważność tokena przy każdym przeładowaniu strony.
 
 3. C: Resource Server / API (Low-level Data)
