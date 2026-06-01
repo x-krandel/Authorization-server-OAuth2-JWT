@@ -18,11 +18,32 @@ if (isset($_COOKIE["jwt_token"]) and $_COOKIE["jwt_token"] != ''){
     }
     echo "❇️ Cookie has been set ❇️";
     echo "<br><p>user: " . $datajs->{'sub'} . "</p>";
+    echo "<p>id: " . $datajs->{'jti'} . "</p>";
 
+    // Checking singnature in Cloud_service
+
+    $ch1 = curl_init("http://localhost:9000/api/user/verify?id=".$datajs->{'jti'});
+
+
+    curl_setopt_array($ch1, [
+        CURLOPT_HTTPGET        => true,
+        CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'Cookie: jwt_token=' . $token],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HEADER         => false,   // <-- potrzebne, żeby odczytać nagłówki
+    ]);
+
+    curl_setopt($ch1, CURLOPT_CONNECTTIMEOUT, 1);
+    curl_setopt($ch1, CURLOPT_TIMEOUT, 2);
+
+    $res = curl_exec($ch1);
+
+
+    echo "<br><p>Data from Cloud_service: " . $res . "</p><br>";
     // Checking signature using serwer C
 
     $ch = curl_init("http://127.0.0.1:1337");
 
+    
 
     curl_setopt_array($ch, [
         CURLOPT_HTTPGET        => true,
