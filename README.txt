@@ -12,6 +12,10 @@ Zadanie: Strona użytkownika (np. prosty panel managera plików). Aplikacja wysy
 
 # php -S localhost:8000
 
+
+[!] PHP aplikacja została rozszerzona o SSRF z Cloud-Native-Microservices, check: http://localhost:8000/index.php?page=home&reference=http://127.0.0.1:3000/api/users/view?id=777
+    Żeby sprawdzić, trzeba odpalić api-gateway, render-service, user-service, oraz serwer Java, który generuje JWT sprawdzane przez Cloude-Native-Microservices
+
 Wyzwanie: Zaimplementuj mechanizm SSO (Single Sign-On). Dodaj w PHP logikę, która sprawdza ważność tokena przy każdym przeładowaniu strony.
 
 3. C: Resource Server / API (Low-level Data)
