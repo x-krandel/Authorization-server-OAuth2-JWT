@@ -1,23 +1,36 @@
 
-Propozycja projektu: Ekosystem Autoryzacji "SafeStack"
-Możesz podzielić projekt na trzy główne komponenty:
 
+## Small overview
 
-1. Java -> Done 
-  **To run use command: `mvn clean spring-boot:run` **
+**This project represents authorization implementaion of common aplication in which several aplications collaborating with each other via REST API.**
 
-2. PHP: Client Application / Dashboard (Frontend & Logic)
-PHP może pełnić rolę aplikacji, która "konsumuje" tokeny z Javy. To tutaj najczęściej pojawiają się luki typu Broken Access Control.
+**Main components are:**
 
-Zadanie: Strona użytkownika (np. prosty panel managera plików). Aplikacja wysyła użytkownika do serwera w Javie, odbiera token JWT i przechowuje go w bezpiecznym ciasteczku (HttpOnly, Secure).
+1. Java server, to run use:
 
-# php -S localhost:8000
+```
+mvn clean spring-boot:run
+```
 
+2. Client-side PHP app, witch is sending user to Java server, and getting JWT token placing him in cookie, to run use:
 
-[+] PHP aplikacja została rozszerzona o SSRF + IDOR z Cloud-Native-Microservices, check: http://localhost:8000/index.php?page=home&reference=http://127.0.0.1:3000/api/users/view?id=777
-    Żeby sprawdzić, trzeba odpalić api-gateway, render-service, user-service, oraz serwer Java, który generuje JWT sprawdzane przez Cloude-Native-Microservices
+```
+php -S localhost:8000
+```
+*PHP part was extended by some included vulnerabilies as well. You can explore basic vulnerabilities combination such as SSRF + IDOR*
 
-Wyzwanie: Zaimplementuj mechanizm SSO (Single Sign-On). Dodaj w PHP logikę, która sprawdza ważność tokena przy każdym przeładowaniu strony.
+*To check it use:*
+
+```
+http://localhost:8000/index.php?page=home&reference=http://127.0.0.1:3000/api/users/view?id=777
+```
+
+**`You also need to run main app from:`**
+```
+git clone https://github.com/x-krandel/Cloud-Native-Microservices.git
+```
+
+Also you can see in this app SSO (Single Sign-On) implementation, which is validating tocken with each page refreshing.
 
 3. C: Resource Server / API (Low-level Data)
 To najbardziej ambitna część. Napisz mały serwer w C (np. oparty na bibliotece libmicrohttpd lub surowych socketach), który przechowuje "wrażliwe dane".
