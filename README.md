@@ -32,28 +32,9 @@ git clone https://github.com/x-krandel/Cloud-Native-Microservices.git
 
 Also you can see in this app SSO (Single Sign-On) implementation, which is validating tocken with each page refreshing.
 
-3. C: Resource Server / API (Low-level Data)
-To najbardziej ambitna część. Napisz mały serwer w C (np. oparty na bibliotece libmicrohttpd lub surowych socketach), który przechowuje "wrażliwe dane".
+3. Resource Server / API (Low-level Data) written in C, which validating JWT token from Java server, comparing `exp` field as well.
 
-Uruchamianie:
- admin@host server % gcc index.c \
-  -I$(brew --prefix openssl)/include \
-  -L$(brew --prefix openssl)/lib \
-  -lssl -lcrypto \
-  -o jwt_validate
-
-Zadanie: PHP wysyła zapytanie do serwera w C, dołączając token JWT w nagłówku Authorization: Bearer. Serwer w C musi sparsować ten token i zweryfikować sygnaturę kluczem publicznym pobranym z Javy.
-
-Wyzwanie: Bezpieczne parsowanie JSON-a w C. To idealne miejsce na błędy typu buffer overflow, co jako gracz CTF możesz później sam spróbować zeskładować.
-
-Jak to połączyć z Twoimi zainteresowaniami CTF?
-Budując taki zestaw, możesz "zaszyć" w nim podatności, które sam spotykasz w zadaniach typu Web i Pwn:
-
-PHP (Web): Celowo zaimplementuj podatność Insecure Deserialization przy przetwarzaniu danych sesji lub Type Juggling przy sprawdzaniu tokenów (jeśli użyjesz luźnych porównań == zamiast ===).
-
-Java (Logic): Stwórz błąd logiczny w walidacji JWT, np. akceptowanie algorytmu none (klasyka gatunku) lub brak weryfikacji pola exp (expiration).
-
-C (Pwn): Przy parsowaniu nagłówków HTTP w serwerze napisanym w C, użyj niebezpiecznych funkcji typu strcpy() lub sprintf() zamiast ich bezpiecznych odpowiedników. Dzięki temu Twój projekt stanie się Twoim własnym poligonem do ćwiczeń.
-
-Od czego zacząć?
-Najlepiej zacząć od Javy i generowania JWT. Gdy będziesz miał działający token, dopisz do niego prosty skrypt w PHP, który go wyświetli i zdekoduje. Na końcu dodaj C jako warstwę dostępu do danych.
+```
+gcc index.c validate_jwt
+./validate_jwt
+```
