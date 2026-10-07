@@ -1,3 +1,4 @@
+
 Propozycja projektu: Ekosystem Autoryzacji "SafeStack"
 Możesz podzielić projekt na trzy główne komponenty:
 
